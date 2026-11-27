@@ -2,15 +2,23 @@
 
 Release 1 is Workflow 1 (supplier bill) and Workflow 4 (daily briefing).
 Plan: 35 lessons and 2 spikes in 6 phases, about 13 weeks at 40 hours a week.
-Week numbers are estimates, not deadlines. Requirement IDs refer to
+Week numbers are estimates, not deadlines. With Claude writing the code they
+may run shorter; the time saved should go to the "Check" step, not to skipping it. Requirement IDs refer to
 docs/requirements.md, ADR IDs to docs/architecture.md.
 
 ## How a lesson runs
 
 1. Concept: what the idea is and why this design was chosen.
-2. Exercise: Rijo writes the code, with hints on request.
-3. Tests: the "done when" checks pass locally and in CI.
-4. Record: update docs/progress.md, add an ADR if a decision changed.
+2. Plan: Claude lists the files it will create or change and what each does,
+   and waits for Rijo's go-ahead.
+3. Build: Claude writes the code in small steps and explains each one
+   thoroughly: what the code does, why it is written this way, and any new
+   language or framework feature it uses. Rust gets line-by-line explanation.
+4. Check: Rijo explains the key part back in his own words, or makes one small
+   change himself (for example, add a field or a test case). Claude corrects
+   any misunderstanding before moving on.
+5. Tests: the "done when" checks pass locally and in CI.
+6. Record: update docs/progress.md, add an ADR if a decision changed.
 
 ## Running alongside the code, from week 1
 

@@ -1,0 +1,48 @@
+# Local development only. Cloud environments are built from infra/ (Terraform).
+name: logicshades
+
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env, see .env.example}
+      POSTGRES_DB: logicshades
+    ports:
+      # Host port is configurable so it cannot clash with another local PostgreSQL.
+      - "127.0.0.1:${POSTGRES_HOST_PORT:-5432}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d logicshades"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  orchestrator:
+    build: ./orchestrator
+    ports:
+      - "127.0.0.1:8000:8000"
+    healthcheck:
+      # The slim Python image has no curl, so the check uses Python itself.
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=2)"
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "127.0.0.1:8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:8080/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  db-data:

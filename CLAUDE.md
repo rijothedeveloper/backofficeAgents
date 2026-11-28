@@ -57,3 +57,9 @@ If a request conflicts with these documents, stop and say so before writing code
 
 # Commands
 Add build, test and run commands here as each service gains them.
+
+- Whole stack: `docker compose up --build --wait` (needs `.env`, see `.env.example`),
+  stop with `docker compose down`. Health: `localhost:8000/health` (orchestrator),
+  `localhost:8080/health` (gateway).
+- Orchestrator tests: `cd orchestrator && uv run pytest`
+- Gateway tests: `cd gateway && cargo test`

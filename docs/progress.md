@@ -2,13 +2,13 @@
 
 Status of each lesson in docs/lessons.md. Updated when a lesson ends.
 
-**Current lesson:** 1
+**Current lesson:** 2
 
 ## Phase 0: Foundations
 
 | # | Lesson | Status | Notes |
 |---|--------|--------|-------|
-| 1 | Repository skeleton | In progress | Started Nov 26, 2026 |
+| 1 | Repository skeleton | Done | Nov 26 to 27, 2026. Local PostgreSQL is 17; host port set by `POSTGRES_HOST_PORT` |
 | 2 | CI with GitHub Actions | Not started | |
 | 3 | Terraform: dev project, Cloud Run | Not started | |
 | 4 | Database v1 and row-level security | Not started | |
